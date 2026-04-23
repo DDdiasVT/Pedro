@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Chave Gemini não configurada' }, { status: 500 })
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro-latest' })
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' })
 
     const prompt = `${SYSTEM_PROMPT}
 
