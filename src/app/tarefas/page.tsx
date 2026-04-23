@@ -160,6 +160,31 @@ export default function TarefasPage() {
   const [tarefas, setTarefas] = useState<Tarefa[]>(mockTarefas)
   const [filterProject, setFilterProject] = useState<string>('Todos')
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [novaTarefaNome, setNovaTarefaNome] = useState('')
+  const [novaTarefaProjeto, setNovaTarefaProjeto] = useState('Infraestrutura')
+
+  const handleCreateTarefa = () => {
+    if (!novaTarefaNome.trim()) return
+    const novaTarefa: Tarefa = {
+      id: Math.random().toString(),
+      obra_id: 'obra-1',
+      nome: novaTarefaNome,
+      projeto: novaTarefaProjeto,
+      descricao: '',
+      responsavel: 'Eng. Pedro',
+      data_inicio: new Date().toISOString(),
+      data_fim_previsto: new Date().toISOString(),
+      percentual_conclusao: 0,
+      status: 'pendente',
+      peso: 1,
+      ocorrencias: []
+    }
+    setTarefas(prev => [...prev, novaTarefa])
+    setNovaTarefaNome('')
+    setIsModalOpen(false)
+  }
+
   const projetos = useMemo(() => {
     const p = Array.from(new Set(tarefas.map(t => t.projeto || 'Sem Projeto')))
     return ['Todos', ...p.sort()]
@@ -211,7 +236,7 @@ export default function TarefasPage() {
               {projetos.map(p => <option key={p} value={p}>{p}</option>)}
             </select>
           </div>
-          <button className="btn-primary text-xs py-2">+ Nova Tarefa</button>
+          <button onClick={() => setIsModalOpen(true)} className="btn-primary text-xs py-2">+ Nova Tarefa</button>
         </div>
       </div>
 
@@ -258,6 +283,50 @@ export default function TarefasPage() {
           </div>
         ))}
       </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-[#121214] border border-zinc-800 rounded-xl p-6 w-full max-w-md shadow-2xl">
+            <h2 className="text-lg font-bold text-white mb-4">Nova Tarefa</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-zinc-400 mb-1">Nome da Tarefa</label>
+                <input 
+                  type="text" 
+                  value={novaTarefaNome}
+                  onChange={(e) => setNovaTarefaNome(e.target.value)}
+                  className="w-full bg-zinc-900 border border-zinc-800 rounded p-2 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="Ex: Concretagem das sapatas"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-zinc-400 mb-1">Projeto / Etapa</label>
+                <input 
+                  type="text" 
+                  value={novaTarefaProjeto}
+                  onChange={(e) => setNovaTarefaProjeto(e.target.value)}
+                  className="w-full bg-zinc-900 border border-zinc-800 rounded p-2 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="Ex: Infraestrutura"
+                />
+              </div>
+              <div className="flex justify-end gap-3 mt-6">
+                <button 
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 text-xs font-bold text-zinc-400 hover:text-white transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button 
+                  onClick={handleCreateTarefa}
+                  className="px-4 py-2 text-xs font-bold bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
+                >
+                  Criar Tarefa
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
