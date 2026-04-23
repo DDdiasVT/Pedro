@@ -100,9 +100,9 @@ export default function Sidebar() {
         {/* Bottom Section */}
         <div className="px-4 py-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
           <div className="flex items-center gap-3 px-4 py-3 rounded-2xl"
-            style={{ background: 'rgba(16,185,129,0.05)', border: '1px solid rgba(16,185,129,0.1)' }}>
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: '#10b981' }}>Cloud Sync On</span>
+            style={{ background: 'rgba(99,102,241,0.05)', border: '1px solid rgba(99,102,241,0.1)' }}>
+            <Zap size={14} className="text-indigo-400 animate-pulse" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-indigo-400">Gemini AI Active</span>
           </div>
           <Link 
             href="/settings" 
