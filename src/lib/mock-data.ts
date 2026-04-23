@@ -163,3 +163,12 @@ export const mockKPIs: KPIs = {
   tarefas_concluidas: 1,
   tarefas_atrasadas: 1,
 }
+
+export const mockHistorico = [
+  { mes: 'Jan', custo_previsto: 100000, custo_real: 95000 },
+  { mes: 'Fev', custo_previsto: 200000, custo_real: 190000 },
+  { mes: 'Mar', custo_previsto: 350000, custo_real: 340000 },
+  { mes: 'Abr', custo_previsto: 500000, custo_real: 490000 },
+  { mes: 'Mai', custo_previsto: 700000, custo_real: 680000 },
+  { mes: 'Jun', custo_previsto: 840000, custo_real: 840000 },
+]

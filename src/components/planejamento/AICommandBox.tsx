@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { BrainCircuit, Loader2, ChevronDown, ChevronUp, Plus, Package, Clock, DollarSign, Sparkles, Send } from 'lucide-react'
+import { BrainCircuit, Loader2, ChevronDown, ChevronUp, Plus, Package, Clock, DollarSign, Sparkles, Send, Trash2, MessageSquare } from 'lucide-react'
 import type { RespostaIA } from '@/types'
 import { formatCurrency } from '@/lib/utils'
 

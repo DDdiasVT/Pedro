@@ -31,7 +31,7 @@ export default function PlanejamentoPage() {
             <p className="text-xs font-semibold mb-1" style={{ color: '#a5b4fc' }}>Dica de uso</p>
             <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               Quanto mais detalhada a descrição, melhor o resultado. Inclua dimensões, pavimento, especificação do material e quantidade quando possível.
-              <br />Exemplo: <em style={{ color: 'var(--text-primary)' }}>"Concretar 5 pilares 30x60cm no pavimento térreo com concreto fck 25 MPa"</em>
+              <br />Exemplo: <em style={{ color: 'var(--text-primary)' }}>&quot;Concretar 5 pilares 30x60cm no pavimento térreo com concreto fck 25 MPa&quot;</em>
             </p>
           </div>
         </div>
