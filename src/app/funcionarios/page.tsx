@@ -82,6 +82,21 @@ export default function FuncionariosPage() {
     fetchData()
   }
 
+  const [showModal, setShowModal] = useState(false)
+  const [newFunc, setNewFunc] = useState({ nome: '', cargo: '', equipe: 'Equipe Civil', tipo: 'proprio' })
+
+  async function handleAddFuncionario() {
+    setSaving(true)
+    const { error } = await supabase.from('funcionarios').insert([newFunc])
+    if (error) alert(error.message)
+    else {
+      setShowModal(false)
+      setNewFunc({ nome: '', cargo: '', equipe: 'Equipe Civil', tipo: 'proprio' })
+      fetchData()
+    }
+    setSaving(false)
+  }
+
   return (
     <div className="p-6 lg:p-8 max-w-6xl mx-auto space-y-8">
       {/* Header */}
@@ -91,21 +106,74 @@ export default function FuncionariosPage() {
           <p className="text-sm text-zinc-500 mt-1">Controle de efetivo, faltas e produtividade de campo.</p>
         </div>
 
-        <div className="flex bg-zinc-900 p-1 rounded-2xl border border-zinc-800">
+        <div className="flex items-center gap-4">
           <button 
-            onClick={() => setActiveTab('presenca')}
-            className={cn("px-6 py-2 rounded-xl text-xs font-bold transition-all", activeTab === 'presenca' ? "bg-indigo-600 text-white shadow-lg" : "text-zinc-500 hover:text-white")}
+            onClick={() => setShowModal(true)}
+            className="btn-primary flex items-center gap-2"
           >
-            Presença Diária
+            <UserPlus size={18} /> Novo Funcionário
           </button>
-          <button 
-            onClick={() => setActiveTab('stats')}
-            className={cn("px-6 py-2 rounded-xl text-xs font-bold transition-all", activeTab === 'stats' ? "bg-indigo-600 text-white shadow-lg" : "text-zinc-500 hover:text-white")}
-          >
-            Relatório de Faltas
-          </button>
+          
+          <div className="flex bg-zinc-900 p-1 rounded-2xl border border-zinc-800">
+            <button 
+              onClick={() => setActiveTab('presenca')}
+              className={cn("px-6 py-2 rounded-xl text-xs font-bold transition-all", activeTab === 'presenca' ? "bg-indigo-600 text-white shadow-lg" : "text-zinc-500 hover:text-white")}
+            >
+              Presença Diária
+            </button>
+            <button 
+              onClick={() => setActiveTab('stats')}
+              className={cn("px-6 py-2 rounded-xl text-xs font-bold transition-all", activeTab === 'stats' ? "bg-indigo-600 text-white shadow-lg" : "text-zinc-500 hover:text-white")}
+            >
+              Relatório de Faltas
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Modal Novo Funcionário */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-3xl p-8 space-y-6 shadow-2xl" style={{ background: 'var(--bg-card)', border: '1px solid var(--border-light)' }}>
+            <h2 className="text-xl font-bold text-white">Cadastrar Funcionário</h2>
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-zinc-500 uppercase">Nome Completo</label>
+                <input className="input-dark w-full" placeholder="Ex: João da Silva" value={newFunc.nome} onChange={e => setNewFunc({...newFunc, nome: e.target.value})} />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-zinc-500 uppercase">Cargo / Função</label>
+                <input className="input-dark w-full" placeholder="Ex: Pedreiro, Mestre, Eletricista" value={newFunc.cargo} onChange={e => setNewFunc({...newFunc, cargo: e.target.value})} />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-zinc-500 uppercase">Equipe</label>
+                  <select className="input-dark w-full" value={newFunc.equipe} onChange={e => setNewFunc({...newFunc, equipe: e.target.value})}>
+                    <option value="Equipe Civil">Equipe Civil</option>
+                    <option value="Equipe Hidráulica">Equipe Hidráulica</option>
+                    <option value="Equipe Elétrica">Equipe Elétrica</option>
+                    <option value="Gestão">Gestão</option>
+                    <option value="Terceirizado">Terceirizado</option>
+                  </select>
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-zinc-500 uppercase">Vínculo</label>
+                  <select className="input-dark w-full" value={newFunc.tipo} onChange={e => setNewFunc({...newFunc, tipo: e.target.value as 'proprio' | 'terceirizado'})}>
+                    <option value="proprio">Próprio (CLT)</option>
+                    <option value="terceirizado">Terceirizado</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-3 pt-4">
+              <button onClick={() => setShowModal(false)} className="flex-1 py-3 rounded-xl bg-zinc-900 text-zinc-400 font-bold">Cancelar</button>
+              <button onClick={handleAddFuncionario} disabled={saving} className="flex-1 btn-primary py-3">
+                {saving ? <Loader2 className="animate-spin mx-auto" size={18} /> : 'Salvar Cadastro'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {activeTab === 'presenca' ? (
         <div className="space-y-6">
