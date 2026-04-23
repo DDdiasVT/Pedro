@@ -10,7 +10,8 @@ import {
   ChevronRight, 
   Building2,
   Calendar,
-  Filter
+  Filter,
+  X
 } from 'lucide-react'
 import { 
   AreaChart, 
@@ -31,6 +32,7 @@ export default function Dashboard() {
   const [obraAtiva, setObraAtiva] = useState<any>(null)
   const [tarefas, setTarefas] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [showAiModal, setShowAiModal] = useState(false)
 
   useEffect(() => {
     async function loadData() {
@@ -292,11 +294,71 @@ export default function Dashboard() {
             <p className="text-xs text-white/80 leading-relaxed">
               Baseado no IDP de 0.92, a concretagem da laje do 4º pavimento pode sofrer um atraso de 3 dias se o efetivo da Equipe Civil não for reforçado até sexta-feira.
             </p>
-            <button className="w-full py-2 rounded-xl bg-white text-indigo-600 text-[10px] font-black uppercase shadow-lg">
+            <button 
+              onClick={() => setShowAiModal(true)}
+              className="w-full py-2 rounded-xl bg-white text-indigo-600 text-[10px] font-black uppercase shadow-lg transition-all active:scale-95"
+            >
               Ver Análise Completa
             </button>
           </div>
         </div>
+
+      </div>
+
+      {/* AI Detailed Analysis Modal */}
+      {showAiModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="w-full max-w-2xl rounded-[32px] p-8 space-y-6 shadow-2xl bg-zinc-950 border border-zinc-800">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                  <TrendingUp size={20} />
+                </div>
+                <h2 className="text-xl font-bold text-white">Análise Preditiva Completa</h2>
+              </div>
+              <button onClick={() => setShowAiModal(false)} className="text-zinc-500 hover:text-white"><X size={24} /></button>
+            </div>
+
+            <div className="space-y-6">
+              <div className="p-4 rounded-2xl bg-indigo-500/5 border border-indigo-500/10 space-y-2">
+                <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Diagnóstico da IA</p>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  Identificamos uma queda de 8% na produtividade da Equipe Civil nos últimos 5 dias, coincidindo com 4 faltas registradas. No ritmo atual, a tarefa <strong>"Laje do 4º Pavimento"</strong> não será iniciada na data prevista.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800">
+                  <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Impacto Financeiro</p>
+                  <p className="text-lg font-bold text-white">R$ 4.200,00</p>
+                  <p className="text-[10px] text-zinc-500">Estimativa de custos extras</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800">
+                  <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Ações Sugeridas</p>
+                  <p className="text-sm font-bold text-emerald-400">+2 Pedreiros</p>
+                  <p className="text-[10px] text-zinc-500">Reforço técnico</p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold text-white uppercase tracking-widest">Plano de Mitigação:</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-xs text-zinc-400"><div className="w-1.5 h-1.5 rounded-full bg-indigo-500" /> Remanejar pessoal da Equipe de Fundações.</li>
+                  <li className="flex items-center gap-2 text-xs text-zinc-400"><div className="w-1.5 h-1.5 rounded-full bg-indigo-500" /> Autorizar horas extras estratégicas esta semana.</li>
+                  <li className="flex items-center gap-2 text-xs text-zinc-400"><div className="w-1.5 h-1.5 rounded-full bg-indigo-500" /> Antecipar entrega de insumos críticos em 24h.</li>
+                </ul>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setShowAiModal(false)}
+              className="w-full py-4 rounded-2xl bg-indigo-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-indigo-500 transition-all shadow-lg"
+            >
+              Entendido, vou aplicar na obra
+            </button>
+          </div>
+        </div>
+      )}
 
       </div>
     </div>
