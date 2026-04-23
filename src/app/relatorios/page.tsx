@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { FileText, Calendar, CheckSquare, Download, Eye, Layout, Share2, Building2 } from 'lucide-react'
+import { FileText, Calendar, CheckSquare, Download, Eye, Layout, Share2, Building2, Users } from 'lucide-react'
 import { cn, formatCurrency } from '@/lib/utils'
 import { mockKPIs, mockTarefas, mockObras, mockInsumos } from '@/lib/mock-data'
 
@@ -16,7 +16,8 @@ export default function RelatoriosPage() {
     tasks: true,
     financial: true,
     photos: true,
-    observations: true
+    observations: true,
+    hr: true
   })
 
   const handleGenerate = () => {
@@ -68,6 +69,7 @@ export default function RelatoriosPage() {
                   { id: 'tasks', label: 'Cronograma de Tarefas', icon: CheckSquare },
                   { id: 'financial', label: 'Resumo Financeiro', icon: Building2 },
                   { id: 'photos', label: 'Diário Fotográfico', icon: CheckSquare },
+                  { id: 'hr', label: 'Mão de Obra e Efetivo', icon: Users },
                   { id: 'observations', label: 'Observações e Ocorrências', icon: FileText },
                 ].map(item => (
                   <label key={item.id} className="flex items-center gap-3 p-3 rounded-lg bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-zinc-700 transition-all">
@@ -171,6 +173,44 @@ export default function RelatoriosPage() {
                         <p className="text-xl font-black text-indigo-900">{mockKPIs.progresso_total}%</p>
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {/* RH Section */}
+                {options.hr && (
+                  <div className="space-y-4">
+                    <h3 className="text-xs font-black uppercase border-l-4 border-indigo-600 pl-2">02. Mão de Obra e Efetivo</h3>
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div className="bg-rose-50 p-3 rounded border border-rose-100">
+                        <p className="text-[8px] font-bold text-rose-400 uppercase">Total de Faltas</p>
+                        <p className="text-lg font-black text-rose-700">12</p>
+                      </div>
+                      <div className="bg-emerald-50 p-3 rounded border border-emerald-100">
+                        <p className="text-[8px] font-bold text-emerald-400 uppercase">Presença Média</p>
+                        <p className="text-lg font-black text-emerald-700">92%</p>
+                      </div>
+                    </div>
+                    <table className="w-full text-[10px]">
+                      <thead className="bg-zinc-100">
+                        <tr>
+                          <th className="p-2 text-left">Funcionário</th>
+                          <th className="p-2 text-center">Equipe</th>
+                          <th className="p-2 text-right">Faltas no Período</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y">
+                        <tr className="border-b">
+                          <td className="p-2 py-2 font-bold">João Pedro</td>
+                          <td className="p-2 text-center text-zinc-500">Equipe Civil</td>
+                          <td className="p-2 text-right font-black text-rose-600">4</td>
+                        </tr>
+                        <tr className="border-b">
+                          <td className="p-2 py-2 font-bold">Ricardo Souza</td>
+                          <td className="p-2 text-center text-zinc-500">Geral</td>
+                          <td className="p-2 text-right font-black text-zinc-400">0</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 )}
 
