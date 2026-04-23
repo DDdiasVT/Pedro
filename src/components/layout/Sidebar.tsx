@@ -17,7 +17,8 @@ import {
   Users,
   DollarSign,
   Menu,
-  X
+  X,
+  FolderOpen
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -31,6 +32,7 @@ const navItems = [
   { href: '/financeiro', label: 'Financeiro', icon: DollarSign },
   { href: '/diario', label: 'Diário de Obra', icon: Camera },
   { href: '/relatorios', label: 'Relatórios', icon: FileText },
+  { href: '/documentos', label: 'Documentos', icon: FolderOpen },
 ]
 
 export default function Sidebar() {
