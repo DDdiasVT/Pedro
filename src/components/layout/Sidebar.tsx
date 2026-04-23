@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useAuth } from '@/contexts/AuthContext'
 import {
   LayoutDashboard,
   BrainCircuit,
@@ -18,7 +19,9 @@ import {
   DollarSign,
   Menu,
   X,
-  FolderOpen
+  FolderOpen,
+  Filter,
+  LogOut
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 

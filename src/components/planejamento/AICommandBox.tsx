@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { BrainCircuit, Loader2, ChevronDown, ChevronUp, Plus, Package, Clock, DollarSign, Sparkles, Send, Trash2, MessageSquare } from 'lucide-react'
 import type { RespostaIA } from '@/types'
-import { formatCurrency } from '@/lib/utils'
+import { formatCurrency, cn } from '@/lib/utils'
 
 async function gerarPlanejamento(tarefa: string): Promise<RespostaIA> {
   const res = await fetch('/api/ai', {
