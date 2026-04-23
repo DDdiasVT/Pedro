@@ -228,11 +228,11 @@ export default function TarefasPage() {
               <span className="text-[10px] font-bold text-zinc-500 uppercase">{projectTasks.length} tarefas</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div className="flex flex-nowrap lg:grid lg:grid-cols-4 gap-4 overflow-x-auto pb-4 custom-scrollbar -mx-4 px-4 lg:mx-0 lg:px-0">
               {COLUNAS.map((col) => {
                 const colTasks = projectTasks.filter(t => t.status === col.id)
                 return (
-                  <div key={col.id} className="flex flex-col gap-3">
+                  <div key={col.id} className="flex flex-col gap-3 min-w-[280px] lg:min-w-0">
                     {/* Mini Column Header */}
                     <div className="flex items-center gap-2 px-1">
                       <div className="w-2 h-2 rounded-full" style={{ background: col.color }} />
